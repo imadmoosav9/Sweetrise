@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sweet Rise & Co. — Order Online</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cinzel:wght@400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --gold: #b8955a;
+    --gold-light: #d4af7a;
+    --gold-dark: #8a6c3a;
+    --deep: #1c1208;
+    --muted: #7a6645;
+    --border: #c8a96e;
+    --white: #ffffff;
+    --red: #c0392b;
+    --green: #2e7d50;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Lato', sans-serif;
+    background: #f9f6f0;
+    color: var(--deep);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--deep);
+    padding: 0;
+  }
+  .saffron-bar { height: 4px; background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-dark)); }
+  .header-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 18px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    font-family: 'Cinzel', serif; font-size: 22px;
+    color: var(--cream); letter-spacing: 2px;
+  }
+  .logo span { color: var(--gold-light); }
+  .logo-sub {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 12px; color: var(--gold); letter-spacing: 1px; margin-top: 2px;
+  }
+  .cart-btn {
+    background: var(--gold-dark); color: white;
+    border: none; border-radius: 6px;
+    padding: 10px 20px; font-family: 'Lato', sans-serif;
+    font-size: 13px; font-weight: 700; letter-spacing: 1px;
+    cursor: pointer; display: flex; align-items: center; gap: 8px;
+    transition: background 0.2s;
+  }
+  .cart-btn:hover { background: var(--gold); }
+  .cart-count {
+    background: var(--gold-light); color: var(--deep);
+    border-radius: 50%; width: 20px; height: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+  }
+
+  /* ── HERO BANNER ── */
+  .hero {
+    background: linear-gradient(135deg, #2d1e0a 0%, #1c1208 60%, #3a2810 100%);
+    padding: 40px 24px; text-align: center;
+  }
+  .hero h1 {
+    font-family: 'Cinzel', serif; font-size: 28px;
+    color: var(--cream); letter-spacing: 3px; margin-bottom: 8px;
+  }
+  .hero p {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 16px; color: var(--gold-light);
+  }
+  .hero-info {
+    display: flex; gap: 24px; justify-content: center; margin-top: 16px; flex-wrap: wrap;
+  }
+  .hero-info span {
+    font-family: 'Lato', sans-serif; font-size: 11px;
+    color: #a89070; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .hero-info strong { color: var(--gold-light); }
+
+  /* ── MAIN LAYOUT ── */
+  .layout {
+    max-width: 1100px; margin: 0 auto;
+    padding: 32px 24px;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 32px;
+    align-items: start;
+  }
+
+  /* ── MENU SIDE ── */
+  .section-header {
+    font-family: 'Cinzel', serif; font-size: 11px;
+    letter-spacing: 5px; text-transform: uppercase;
+    color: var(--gold-dark); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-header::before, .section-header::after {
+    content:''; flex:1; height:1px; background: var(--border);
+  }
+  .menu-section { margin-bottom: 28px; }
+
+  .menu-card {
+    background: white; border-radius: 10px;
+    border: 1px solid #e8dfc8;
+    padding: 14px; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 14px;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .menu-card:hover {
+    box-shadow: 0 4px 16px rgba(184,149,90,0.15);
+    border-color: var(--border);
+  }
+  .card-img {
+    width: 80px; height: 64px; object-fit: cover;
+    border-radius: 6px; flex-shrink: 0;
+    border: 1px solid #e8dfc8;
+  }
+
+  .card-info { flex:1; min-width:0; }
+  .card-name {
+    font-family: 'Cormorant Garamond', serif; font-size: 17px;
+    font-weight: 600; color: #000000; margin-bottom: 3px;
+  }
+  .card-desc {
+    font-family: 'Lato', sans-serif; font-size: 11px;
+    color: #000000; line-height: 1.4; font-style: italic;
+  }
+  .card-right {
+    display: flex; flex-direction: column;
+    align-items: flex-end; gap: 8px; flex-shrink: 0;
+  }
+  .card-price {
+    font-family: 'Cormorant Garamond', serif; font-size: 18px;
+    font-weight: 600; color: #000000;
+  }
+  .add-btn {
+    background: var(--gold-dark); color: white;
+    border: none; border-radius: 20px;
+    padding: 6px 16px; font-family: 'Lato', sans-serif;
+    font-size: 12px; font-weight: 700; cursor: pointer;
+    transition: background 0.2s; white-space: nowrap;
+  }
+  .add-btn:hover { background: var(--gold); }
+  .add-btn.added {
+    background: var(--green);
+  }
+  .qty-control {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .qty-btn {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 1.5px solid var(--border); background: white;
+    color: var(--gold-dark); font-size: 16px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .qty-btn:hover { background: var(--gold-dark); color: white; border-color: var(--gold-dark); }
+  .qty-num {
+    font-family: 'Lato', sans-serif; font-size: 14px;
+    font-weight: 700; color: var(--deep); min-width: 16px; text-align: center;
+  }
+
+  /* ── CART SIDE ── */
+  .cart-panel {
+    background: white; border-radius: 12px;
+    border: 1px solid #e8dfc8;
+    position: sticky; top: 24px;
+    overflow: hidden;
+  }
+  .cart-header {
+    background: var(--deep); padding: 16px 20px;
+    font-family: 'Cinzel', serif; font-size: 13px;
+    letter-spacing: 3px; color: var(--cream); text-transform: uppercase;
+  }
+  .cart-body { padding: 16px 20px; }
+  .cart-empty {
+    text-align: center; padding: 32px 0;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 15px; color: #b0a090;
+  }
+  .cart-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px dotted #e0d5c0;
+  }
+  .cart-item:last-child { border-bottom: none; }
+  .ci-name {
+    flex:1; font-family: 'Lato', sans-serif;
+    font-size: 13px; color: #000000;
+  }
+  .ci-qty {
+    font-family: 'Lato', sans-serif; font-size: 12px;
+    color: var(--muted); background: #f5f0e8;
+    padding: 2px 8px; border-radius: 10px;
+  }
+  .ci-price {
+    font-family: 'Cormorant Garamond', serif; font-size: 15px;
+    color: #000000; font-weight: 600; min-width: 44px; text-align: right;
+  }
+  .ci-remove {
+    background: none; border: none; color: #c0a080;
+    cursor: pointer; font-size: 16px; padding: 0 2px;
+    transition: color 0.15s;
+  }
+  .ci-remove:hover { color: var(--red); }
+  .cart-totals {
+    padding: 14px 0 4px;
+    border-top: 1px solid #e8dfc8;
+    margin-top: 8px;
+  }
+  .total-row {
+    display: flex; justify-content: space-between;
+    font-family: 'Lato', sans-serif; font-size: 13px;
+    color: var(--muted); margin-bottom: 6px;
+  }
+  .total-row.grand {
+    font-size: 16px; font-weight: 700;
+    color: var(--deep); margin-top: 8px;
+    padding-top: 8px; border-top: 1.5px solid var(--border);
+  }
+  .total-row.grand span:last-child { color: #000000; }
+
+  /* ── CUSTOMER FORM ── */
+  .form-section {
+    padding: 0 20px 16px;
+    border-top: 1px solid #f0e8d8;
+    margin-top: 4px;
+  }
+  .form-title {
+    font-family: 'Cinzel', serif; font-size: 10px;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold-dark); margin: 14px 0 10px;
+  }
+  .form-input {
+    width: 100%; border: 1px solid #ddd; border-radius: 6px;
+    padding: 9px 12px; font-family: 'Lato', sans-serif;
+    font-size: 13px; color: var(--deep);
+    margin-bottom: 8px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--border); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  /* ── STRIPE ELEMENT ── */
+  .stripe-box {
+    border: 1px solid #ddd; border-radius: 6px;
+    padding: 10px 12px; margin-bottom: 8px;
+    background: white;
+  }
+  .stripe-box:focus-within { border-color: var(--border); }
+
+  /* ── CHECKOUT BTN ── */
+  .checkout-btn {
+    width: 100%; padding: 14px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: white; border: none; border-radius: 8px;
+    font-family: 'Cinzel', serif; font-size: 13px;
+    letter-spacing: 2px; cursor: pointer;
+    margin-top: 12px; transition: opacity 0.2s;
+    text-transform: uppercase;
+  }
+  .checkout-btn:hover { opacity: 0.9; }
+  .checkout-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .stripe-notice {
+    text-align: center; margin-top: 10px;
+    font-family: 'Lato', sans-serif; font-size: 10px;
+    color: #b0a090; letter-spacing: 0.5px;
+  }
+
+  /* ── SUCCESS / ERROR MESSAGES ── */
+  .msg {
+    border-radius: 8px; padding: 12px 16px; margin: 10px 20px;
+    font-family: 'Lato', sans-serif; font-size: 13px; display: none;
+  }
+  .msg.success { background: #eafaf1; color: var(--green); border: 1px solid #a8dfc0; }
+  .msg.error   { background: #fdf0ef; color: var(--red);   border: 1px solid #f0b8b0; }
+
+  /* ── NOTICE BANNER ── */
+  .notice-bar {
+    background: #fef9f0; border-bottom: 1px solid #e8dfc8;
+    padding: 10px 24px; text-align: center;
+    font-family: 'Lato', sans-serif; font-size: 12px;
+    color: var(--muted); letter-spacing: 0.5px;
+  }
+  .notice-bar strong { color: var(--gold-dark); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--deep); color: #a89070;
+    text-align: center; padding: 28px 24px;
+    font-family: 'Lato', sans-serif; font-size: 12px;
+    letter-spacing: 0.5px; margin-top: 48px;
+  }
+  footer strong { color: var(--gold-light); }
+
+  @media (max-width: 768px) {
+    .layout { grid-template-columns: 1fr; }
+    .cart-panel { position: static; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="saffron-bar"></div>
+  <div class="header-inner">
+    <div>
+      <div class="logo">Sweet Rise <span>&</span> Co.</div>
+      <div class="logo-sub">Mediterranean &amp; Persian Cuisine</div>
+    </div>
+    <button class="cart-btn" onclick="scrollToCart()">
+      🛒 Your Order <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<div class="saffron-bar"></div>
+
+<div class="hero">
+  <h1>Order Online</h1>
+  <p>Fresh, homemade Mediterranean &amp; Persian cuisine — delivered to your door</p>
+  <div class="hero-info">
+    <span>⏰ <strong>Mon–Wed</strong> Taking Orders</span>
+    <span>🚗 <strong>Thu–Fri</strong> Deliveries</span>
+    <span>🕐 <strong>10am – 7pm</strong></span>
+    <span>📞 <strong>928-242-8069</strong></span>
+  </div>
+</div>
+
+<div class="notice-bar">
+  🔔 Orders placed Mon–Wed will be delivered <strong>Thursday or Friday</strong>. We'll confirm your delivery time by phone.
+</div>
+
+<div class="layout">
+
+  <!-- ── MENU ── -->
+  <div class="menu-col">
+
+    <div class="menu-section">
+      <div class="section-header">Appetizers</div>
+
+      <div class="menu-card">
+        <div class="card-info">
+          <div class="card-name">Grilled Eggplant Dip</div>
+          <div class="card-desc">Smoky roasted eggplant served with warm pita bread</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">$7.50</div>
+          <div id="ctrl-eggplant"></div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="card-info">
+          <div class="card-name">Hummus</div>
+          <div class="card-desc">Creamy house-made hummus with warm pita bread</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">$7.00</div>
+          <div id="ctrl-hummus"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="section-header">Salads</div>
+
+      <div class="menu-card">
+        <img class="card-img" src="images/shirazi-salad.jpg" alt="Shirazi Salad">
+        <div class="card-info">
+          <div class="card-name">Shirazi Salad</div>
+          <div class="card-desc">Cucumber, tomato, red onion, green pepper, cilantro &amp; parsley — lime &amp; dried mint</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">$7.00</div>
+          <div id="ctrl-shirazi"></div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="card-info">
+          <div class="card-name">Quinoa Salad</div>
+          <div class="card-desc">Bell pepper, scallions, olives, cucumbers &amp; feta cheese</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">$8.00</div>
+          <div id="ctrl-quinoa"></div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="card-info">
+          <div class="card-name">Greek Pasta Salad</div>
+          <div class="card-desc">Tender pasta, tomatoes, cucumbers, feta, olives, red bell pepper &amp; red onion</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">$11.00</div>
+          <div id="ctrl-greek-pasta"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="section-header">Main Courses</div>
+
+      <div class="menu-card">
+        <img class="card-img" src="images/chicken-kabob.jpg" alt="Chicken Kabob">
+        <div class="card-info">
+          <div class="card-name">Chicken Kabob</div>
+          <div class="card-desc">Marinated grilled skewers with saffron rice &amp; grilled tomatoes</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">$18.00</div>
+          <div id="ctrl-kabob"></div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="card-info">
+          <div class="card-name">Chicken Koobideh</div>
+          <div class="card-desc">Seasoned ground chicken skewer with rice &amp; grilled tomatoes</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">$19.00</div>
+          <div id="ctrl-koobideh"></div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img class="card-img" src="images/saffron-chicken.jpg" alt="Saffron Barberry Chicken">
+        <div class="card-info">
+          <div class="card-name">Saffron Barberry Chicken</div>
+          <div class="card-desc">Chicken thighs on saffron rice, barberry, plums &amp; pistachios — with salad</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">$20.00</div>
+          <div id="ctrl-saffron"></div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img class="card-img" src="images/med-bowl.jpg" alt="Mediterranean Bowl">
+        <div class="card-info">
+          <div class="card-name">Vegetarian Mediterranean Bowl 🌿</div>
+          <div class="card-desc">Quinoa, hummus, feta, olives, onion, bell peppers, tomatoes &amp; cucumbers — with pita</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">$16.00</div>
+          <div id="ctrl-medbowl"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="section-header">Desserts</div>
+
+      <div class="menu-card">
+        <img class="card-img" src="images/baklava.jpg" alt="Walnut Baklava">
+        <div class="card-info">
+          <div class="card-name">Walnut Baklava</div>
+          <div class="card-desc">Flaky phyllo layered with walnuts &amp; honey syrup</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">$5.95</div>
+          <div id="ctrl-baklava"></div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <img class="card-img" src="images/tiramisu.jpg" alt="Tiramisu">
+        <div class="card-info">
+          <div class="card-name">Tiramisu</div>
+          <div class="card-desc">Layered espresso mascarpone dusted with cocoa</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">$8.00</div>
+          <div id="ctrl-tiramisu"></div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="card-info">
+          <div class="card-name">Persian Saffron Pudding</div>
+          <div class="card-desc">Delicate rice pudding with golden saffron &amp; crushed pistachios</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">$5.00</div>
+          <div id="ctrl-pudding"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-section">
+      <div class="section-header">Drinks</div>
+
+      <div class="menu-card">
+        <div class="card-info">
+          <div class="card-name">Fresh Mint Lemonade</div>
+          <div class="card-desc">Freshly squeezed lemonade with garden mint</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">$4.50</div>
+          <div id="ctrl-lemonade"></div>
+        </div>
+      </div>
+
+      <div class="menu-card">
+        <div class="card-info">
+          <div class="card-name">Yogurt Spritzer</div>
+          <div class="card-desc">Yogurt, club soda &amp; dried mint — savory &amp; refreshing</div>
+        </div>
+        <div class="card-right">
+          <div class="card-price">$4.00</div>
+          <div id="ctrl-doogh"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end menu-col -->
+
+  <!-- ── CART + CHECKOUT ── -->
+  <div class="cart-panel" id="cartPanel">
+    <div class="cart-header">🛒 &nbsp; Your Order</div>
+
+    <div class="cart-body">
+      <div class="cart-empty" id="cartEmpty">Your cart is empty.<br>Add items from the menu!</div>
+      <div id="cartItems"></div>
+      <div class="cart-totals" id="cartTotals" style="display:none;">
+        <div class="total-row"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+        <div class="total-row"><span>Delivery fee</span><span>$0.00</span></div>
+        <div class="total-row grand"><span>Total</span><span id="grandTotal">$0.00</span></div>
+      </div>
+    </div>
+
+    <div class="form-section" id="checkoutForm" style="display:none;">
+      <div class="form-title">Your Details</div>
+      <input class="form-input" id="custName" type="text" placeholder="Full Name" required>
+      <input class="form-input" id="custPhone" type="tel" placeholder="Phone Number" required>
+      <input class="form-input" id="custEmail" type="email" placeholder="Email Address" required>
+      <input class="form-input" id="custAddress" type="text" placeholder="Delivery Address" required>
+      <textarea class="form-input" id="custNotes" placeholder="Special requests or notes (optional)" rows="2" style="resize:vertical;"></textarea>
+
+      <div class="form-title">Payment</div>
+      <div class="stripe-box" id="card-element"></div>
+      <div id="card-errors" style="color:var(--red);font-size:12px;margin-bottom:6px;"></div>
+
+      <button class="checkout-btn" id="payBtn" onclick="submitOrder()">
+        Place Order &amp; Pay
+      </button>
+      <div class="stripe-notice">🔒 Payments secured by Stripe</div>
+    </div>
+
+    <div class="msg success" id="successMsg">
+      ✅ Order placed! We'll call you to confirm your delivery time.
+    </div>
+    <div class="msg error" id="errorMsg"></div>
+
+  </div><!-- end cart-panel -->
+
+</div><!-- end layout -->
+
+<footer>
+  <strong>Sweet Rise &amp; Co.</strong> &nbsp;·&nbsp; Mediterranean &amp; Persian Cuisine<br>
+  <span style="margin-top:6px;display:block;">📞 928-242-8069 &nbsp;·&nbsp; Mon–Wed: Taking Orders &nbsp;·&nbsp; Thu–Fri: Deliveries &nbsp;·&nbsp; 10am–7pm</span>
+  <span style="margin-top:6px;display:block;">💸 Cash App: $meditpersian</span>
+</footer>
+
+<script>
+// ── MENU DATA ──────────────────────────────────────────────────────────────
+const MENU = [
+  { id:'eggplant',    name:'Grilled Eggplant Dip',           price:7.50  },
+  { id:'hummus',      name:'Hummus',                          price:7.00  },
+  { id:'shirazi',     name:'Shirazi Salad',                   price:7.00  },
+  { id:'quinoa',      name:'Quinoa Salad',                    price:8.00  },
+  { id:'greek-pasta', name:'Greek Pasta Salad',               price:11.00 },
+  { id:'kabob',       name:'Chicken Kabob',                   price:18.00 },
+  { id:'koobideh',    name:'Chicken Koobideh',                price:19.00 },
+  { id:'saffron',     name:'Saffron Barberry Chicken',        price:20.00 },
+  { id:'medbowl',     name:'Vegetarian Mediterranean Bowl',   price:16.00 },
+  { id:'baklava',     name:'Walnut Baklava',                  price:5.95  },
+  { id:'tiramisu',    name:'Tiramisu',                        price:8.00  },
+  { id:'pudding',     name:'Persian Saffron Pudding',         price:5.00  },
+  { id:'lemonade',    name:'Fresh Mint Lemonade',             price:4.50  },
+  { id:'doogh',       name:'Yogurt Spritzer',                 price:4.00  },
+];
+
+// ── CART STATE ─────────────────────────────────────────────────────────────
+const cart = {};
+
+function getItem(id) { return MENU.find(m => m.id === id); }
+
+function renderControl(id) {
+  const el = document.getElementById('ctrl-' + id);
+  if (!el) return;
+  const qty = cart[id] || 0;
+  if (qty === 0) {
+    el.innerHTML = `<button class="add-btn" onclick="addItem('${id}')">+ Add</button>`;
+  } else {
+    el.innerHTML = `
+      <div class="qty-control">
+        <button class="qty-btn" onclick="changeQty('${id}',-1)">−</button>
+        <span class="qty-num">${qty}</span>
+        <button class="qty-btn" onclick="changeQty('${id}',1)">+</button>
+      </div>`;
+  }
+}
+
+function addItem(id) {
+  cart[id] = (cart[id] || 0) + 1;
+  renderControl(id);
+  updateCart();
+}
+
+function changeQty(id, delta) {
+  cart[id] = Math.max(0, (cart[id] || 0) + delta);
+  if (cart[id] === 0) delete cart[id];
+  renderControl(id);
+  updateCart();
+}
+
+function removeItem(id) {
+  delete cart[id];
+  renderControl(id);
+  updateCart();
+}
+
+function updateCart() {
+  const ids = Object.keys(cart);
+  const total = ids.reduce((s,id) => s + (cart[id] * getItem(id).price), 0);
+  const count = ids.reduce((s,id) => s + cart[id], 0);
+
+  document.getElementById('cartCount').textContent = count;
+  document.getElementById('cartEmpty').style.display = ids.length ? 'none' : 'block';
+  document.getElementById('cartTotals').style.display = ids.length ? 'block' : 'none';
+  document.getElementById('checkoutForm').style.display = ids.length ? 'block' : 'none';
+
+  const itemsEl = document.getElementById('cartItems');
+  itemsEl.innerHTML = ids.map(id => {
+    const item = getItem(id);
+    const lineTotal = (cart[id] * item.price).toFixed(2);
+    return `
+      <div class="cart-item">
+        <span class="ci-name">${item.name}</span>
+        <span class="ci-qty">x${cart[id]}</span>
+        <span class="ci-price">$${lineTotal}</span>
+        <button class="ci-remove" onclick="removeItem('${id}')">✕</button>
+      </div>`;
+  }).join('');
+
+  document.getElementById('subtotal').textContent = '$' + total.toFixed(2);
+  document.getElementById('grandTotal').textContent = '$' + total.toFixed(2);
+
+  // init Stripe card element once form appears
+  if (ids.length && !stripeReady) initStripe();
+}
+
+// ── STRIPE ─────────────────────────────────────────────────────────────────
+let stripe, cardElement, stripeReady = false;
+
+function initStripe() {
+  // ⚠️  REPLACE THIS WITH YOUR STRIPE PUBLISHABLE KEY
+  // Get it from: https://dashboard.stripe.com/apikeys
+  const STRIPE_KEY = 'pk_live_51TiHSYF19EDoQTzOnJETtYVfFb5rrupghRhI9tqxgSxDj2MwPA9k9FEecdYVIjdNewTMypagGfTxxe6uQX1AKNDK00XcTOA6T2';
+
+  try {
+    stripe = Stripe(STRIPE_KEY);
+    const elements = stripe.elements();
+    cardElement = elements.create('card', {
+      style: {
+        base: {
+          fontFamily: 'Lato, sans-serif', fontSize: '14px',
+          color: '#1c1208', '::placeholder': { color: '#b0a090' }
+        }
+      }
+    });
+    cardElement.mount('#card-element');
+    stripeReady = true;
+  } catch(e) {
+    document.getElementById('card-element').innerHTML =
+      '<p style="font-size:12px;color:#b8955a;">⚠️ Add your Stripe key to enable card payments. For now, orders can be placed by phone: <strong>928-242-8069</strong></p>';
+    stripeReady = true;
+  }
+}
+
+async function submitOrder() {
+  const name    = document.getElementById('custName').value.trim();
+  const phone   = document.getElementById('custPhone').value.trim();
+  const email   = document.getElementById('custEmail').value.trim();
+  const address = document.getElementById('custAddress').value.trim();
+  const notes   = document.getElementById('custNotes').value.trim();
+
+  if (!name || !phone || !email || !address) {
+    showError('Please fill in all required fields.');
+    return;
+  }
+
+  const btn = document.getElementById('payBtn');
+  btn.disabled = true;
+  btn.textContent = 'Processing…';
+
+  const orderSummary = Object.keys(cart).map(id => {
+    const item = getItem(id);
+    return `${cart[id]}x ${item.name} @ $${item.price.toFixed(2)}`;
+  }).join(', ');
+
+  const total = Object.keys(cart).reduce((s,id) => s + cart[id] * getItem(id).price, 0);
+
+  // ── If Stripe is configured, process payment ──
+  if (stripe && cardElement) {
+    const {paymentMethod, error} = await stripe.createPaymentMethod({
+      type: 'card',
+      card: cardElement,
+      billing_details: { name, email, phone },
+    });
+
+    if (error) {
+      showError(error.message);
+      btn.disabled = false;
+      btn.textContent = 'Place Order & Pay';
+      return;
+    }
+
+    // Send to Netlify function for payment + email
+    const res = await fetch('/.netlify/functions/create-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        paymentMethodId: paymentMethod.id,
+        amount: Math.round(total * 100), // cents
+        customer: { name, phone, email, address, notes },
+        items: Object.keys(cart).map(id => ({
+          name: getItem(id).name,
+          qty: cart[id],
+          price: getItem(id).price,
+          lineTotal: (cart[id] * getItem(id).price).toFixed(2)
+        })),
+        orderTotal: total.toFixed(2)
+      })
+    });
+
+    const result = await res.json();
+    if (!res.ok || result.error) {
+      showError(result.error || 'Payment failed. Please try again.');
+      btn.disabled = false;
+      btn.textContent = 'Place Order & Pay';
+      return;
+    }
+  }
+
+  // ── Show success (replace with real backend confirmation) ──
+  showSuccess();
+  btn.disabled = false;
+  btn.textContent = 'Place Order & Pay';
+}
+
+function showSuccess() {
+  document.getElementById('checkoutForm').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+  document.getElementById('errorMsg').style.display = 'none';
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorMsg');
+  el.textContent = '⚠️ ' + msg;
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 5000);
+}
+
+function scrollToCart() {
+  document.getElementById('cartPanel').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ── INIT: render all Add buttons once DOM is fully ready ──────────────────
+function init() {
+  MENU.forEach(item => renderControl(item.id));
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+</script>
+<script src="https://js.stripe.com/v3/"></script>
+</body>
+</html>
